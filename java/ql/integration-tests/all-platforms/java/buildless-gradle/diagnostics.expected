@@ -27,12 +27,12 @@
   }
 }
 {
-  "markdownMessage": "Java buildless mode used the system default JDK.",
+  "markdownMessage": "Java buildless mode used JDK version 17.0.0 as recommended by build tool Gradle",
   "severity": "unknown",
   "source": {
     "extractorName": "java",
     "id": "java/autobuilder/buildless/jdk-system-default",
-    "name": "Java buildless mode used the system default JDK"
+    "name": "Java buildless mode used JDK version 17.0.0 as recommended by build tool Gradle"
   },
   "visibility": {
     "cliSummaryTable": true,
