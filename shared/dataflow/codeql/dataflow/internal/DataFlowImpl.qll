@@ -3766,6 +3766,13 @@ module MakeImpl<InputSig Lang> {
 
     private predicate pathSuccPlus(PathNodeImpl n1, PathNodeImpl n2) = fastTC(pathSucc/2)(n1, n2)
 
+    private predicate isFlowSource(PathNodeImpl n) { n.isFlowSource() }
+
+    private predicate isFlowSink(PathNodeImpl n) { n.isFlowSink() }
+
+    private predicate doublyBoundedPathSuccPlus(PathNodeImpl n1, PathNodeImpl n2) =
+      doublyBoundedFastTC(pathSucc/2, isFlowSource/1, isFlowSink/1)(n1, n2)
+
     /**
      * A `Node` augmented with a call context (except for sinks) and an access path.
      * Only those `PathNode`s that are reachable from a source, and which can reach a sink, are generated.
@@ -4400,9 +4407,9 @@ module MakeImpl<InputSig Lang> {
       exists(PathNodeImpl flowsource, PathNodeImpl flowsink |
         source = flowsource and sink = flowsink
       |
-        flowsource.isFlowSource() and
-        (flowsource = flowsink or pathSuccPlus(flowsource, flowsink)) and
-        flowsink.isFlowSink()
+        flowsource.isFlowSource() and flowsink.isFlowSink() and flowsource = flowsink
+        or
+        doublyBoundedPathSuccPlus(flowsource, flowsink)
       )
     }
 
